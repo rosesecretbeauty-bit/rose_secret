@@ -1,0 +1,57 @@
+{
+  "name": "rose-secret-backend",
+  "version": "1.0.0",
+  "description": "Backend MVP para Rose Secret - E-commerce de Belleza",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:ci": "jest --coverage --ci --maxWorkers=2 --detectOpenHandles --forceExit",
+    "lint": "eslint . --ext .js --ignore-path .gitignore || true",
+    "lint:fix": "eslint . --ext .js --fix --ignore-path .gitignore || true"
+  },
+  "keywords": [
+    "ecommerce",
+    "beauty",
+    "perfume",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@stripe/react-stripe-js": "^5.4.1",
+    "@stripe/stripe-js": "^8.6.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.0.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "mysql2": "^3.6.0",
+    "nodemailer": "^7.0.12",
+    "pg": "^8.16.3",
+    "redis": "^4.6.0",
+    "resend": "^6.6.0",
+    "streamifier": "^0.1.1",
+    "stripe": "^20.1.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "twilio": "^5.11.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
