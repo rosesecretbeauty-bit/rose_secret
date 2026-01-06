@@ -7,9 +7,6 @@ import { Product } from '../types';
 import { ProductCard } from '../components/products/ProductCard';
 import { PremiumLoader } from '../components/ui/PremiumLoader';
 
-export function StyleQuizPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
 interface Question {
   id: number;
   text: string;
@@ -19,6 +16,7 @@ interface Question {
     image?: string;
   }[];
 }
+
 const questions: Question[] = [{
   id: 1,
   text: 'What is your primary skin concern?',
@@ -80,7 +78,10 @@ const questions: Question[] = [{
     image: 'https://images.unsplash.com/photo-1595475207225-428b62bda831?w=400'
   }]
 }];
+
 export function StyleQuizPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);
@@ -100,6 +101,7 @@ export function StyleQuizPage() {
     }
     loadProducts();
   }, []);
+
   const handleAnswer = (optionId: string) => {
     setAnswers({
       ...answers,
@@ -115,32 +117,44 @@ export function StyleQuizPage() {
       }, 1500);
     }
   };
+
   const resetQuiz = () => {
     setStep(0);
     setAnswers({});
     setShowResults(false);
   };
+
   // Get recommendations based on answers
   const recommendations = products.slice(0, 3);
+
   if (isLoadingProducts && !showResults) {
-    return <div className="min-h-screen flex items-center justify-center">
-      <PremiumLoader />
-    </div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <PremiumLoader />
+      </div>
+    );
   }
 
-  return <div className="min-h-screen bg-rose-50/30 py-12 md:py-20">
+  return (
+    <div className="min-h-screen bg-rose-50/30 py-12 md:py-20">
       <div className="container-custom max-w-4xl">
         <AnimatePresence mode="wait">
-          {!showResults && !loading && <motion.div key="quiz" initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} exit={{
-          opacity: 0,
-          y: -20
-        }}>
+          {!showResults && !loading && (
+            <motion.div
+              key="quiz"
+              initial={{
+                opacity: 0,
+                y: 20
+              }}
+              animate={{
+                opacity: 1,
+                y: 0
+              }}
+              exit={{
+                opacity: 0,
+                y: -20
+              }}
+            >
               <div className="text-center mb-12">
                 <span className="text-rose-600 font-medium tracking-wider uppercase text-sm mb-2 block">
                   Personalized Beauty Profile
@@ -149,11 +163,15 @@ export function StyleQuizPage() {
                   Discover Your Perfect Match
                 </h1>
                 <div className="w-full max-w-md mx-auto bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                  <motion.div className="h-full bg-rose-600" initial={{
-                width: 0
-              }} animate={{
-                width: `${(step + 1) / questions.length * 100}%`
-              }} />
+                  <motion.div
+                    className="h-full bg-rose-600"
+                    initial={{
+                      width: 0
+                    }}
+                    animate={{
+                      width: `${(step + 1) / questions.length * 100}%`
+                    }}
+                  />
                 </div>
                 <p className="text-gray-500 mt-2 text-sm">
                   Question {step + 1} of {questions.length}
@@ -166,13 +184,24 @@ export function StyleQuizPage() {
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {questions[step].options.map(option => <motion.button key={option.id} whileHover={{
-                scale: 1.02
-              }} whileTap={{
-                scale: 0.98
-              }} onClick={() => handleAnswer(option.id)} className="group relative overflow-hidden rounded-xl aspect-[4/3] text-left">
+                  {questions[step].options.map(option => (
+                    <motion.button
+                      key={option.id}
+                      whileHover={{
+                        scale: 1.02
+                      }}
+                      whileTap={{
+                        scale: 0.98
+                      }}
+                      onClick={() => handleAnswer(option.id)}
+                      className="group relative overflow-hidden rounded-xl aspect-[4/3] text-left"
+                    >
                       <div className="absolute inset-0">
-                        <img src={option.image} alt={option.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <img
+                          src={option.image}
+                          alt={option.label}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
                         <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
                       </div>
                       <div className="absolute inset-0 flex items-center justify-center p-6">
@@ -183,18 +212,27 @@ export function StyleQuizPage() {
                       <div className="absolute bottom-4 right-4 w-8 h-8 bg-white/20 backdrop-blur rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <ArrowRight className="h-4 w-4 text-white" />
                       </div>
-                    </motion.button>)}
+                    </motion.button>
+                  ))}
                 </div>
               </div>
-            </motion.div>}
+            </motion.div>
+          )}
 
-          {loading && <motion.div key="loading" initial={{
-          opacity: 0
-        }} animate={{
-          opacity: 1
-        }} exit={{
-          opacity: 0
-        }} className="flex flex-col items-center justify-center min-h-[50vh]">
+          {loading && (
+            <motion.div
+              key="loading"
+              initial={{
+                opacity: 0
+              }}
+              animate={{
+                opacity: 1
+              }}
+              exit={{
+                opacity: 0
+              }}
+              className="flex flex-col items-center justify-center min-h-[50vh]"
+            >
               <div className="w-16 h-16 border-4 border-rose-200 border-t-rose-600 rounded-full animate-spin mb-6" />
               <h2 className="font-serif text-2xl font-bold text-gray-900 mb-2">
                 Analyzing Your Profile
@@ -202,13 +240,20 @@ export function StyleQuizPage() {
               <p className="text-gray-500">
                 Curating your personalized collection...
               </p>
-            </motion.div>}
+            </motion.div>
+          )}
 
-          {showResults && <motion.div key="results" initial={{
-          opacity: 0
-        }} animate={{
-          opacity: 1
-        }} className="text-center">
+          {showResults && (
+            <motion.div
+              key="results"
+              initial={{
+                opacity: 0
+              }}
+              animate={{
+                opacity: 1
+              }}
+              className="text-center"
+            >
               <div className="mb-12">
                 <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Sparkles className="h-10 w-10 text-rose-600" />
@@ -223,17 +268,24 @@ export function StyleQuizPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 text-left">
-                {recommendations.map((product, index) => <motion.div key={product.id} initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              delay: index * 0.1
-            }}>
+                {recommendations.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{
+                      opacity: 0,
+                      y: 20
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0
+                    }}
+                    transition={{
+                      delay: index * 0.1
+                    }}
+                  >
                     <ProductCard product={product} />
-                  </motion.div>)}
+                  </motion.div>
+                ))}
               </div>
 
               <div className="flex justify-center gap-4">
@@ -242,8 +294,10 @@ export function StyleQuizPage() {
                 </Button>
                 <Button size="lg">Shop All Recommendations</Button>
               </div>
-            </motion.div>}
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
-    </div>;
+    </div>
+  );
 }
