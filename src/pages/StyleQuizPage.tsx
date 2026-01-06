@@ -79,6 +79,7 @@ const questions: Question[] = [{
   }]
 }];
 
+// Style Quiz Page Component
 export function StyleQuizPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
